@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login – CampusKart</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <style>
+    :root {
+      --primary-blue: #4F46E5;
+      --light-blue: #d0e8ff;
+      --white: #ffffff;
+      --gray-text: #6B7280;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    html, body {
+      height: 100%;
+      background: url("./images/loginandsignupbg.png") no-repeat center center fixed;
+      background-size: cover;
+      overflow-x: hidden;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      background-color: #165998;
+      color: white;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      flex-wrap: wrap;
+    }
+
+    .logo-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .logo-brand img {
+      height: 36px;
+      width: 36px;
+      border-radius: 6px;
+    }
+
+    .logo-brand span {
+      font-size: 1.6rem;
+      font-weight: bold;
+      color: white;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 0.8rem;
+      justify-content: flex-end;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: white;
+      font-weight: 500;
+      padding: 0.45rem 1rem;
+      border-radius: 50px;
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .nav-links a:hover {
+      background-color: white;
+      color: var(--primary-blue);
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .nav-links {
+        justify-content: center;
+        margin-top: 0.5rem;
+      }
+
+      .logo-brand {
+        justify-content: center;
+      }
+    }
+
+    .background {
+      min-height: calc(100vh - 80px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      position: relative;
+    }
+
+    .lamp {
+      position: absolute;
+      top: -60px;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle at center, rgba(255, 255, 255, 0.4) 0%, transparent 80%);
+      box-shadow: 0 0 200px 100px rgba(0, 114, 255, 0.12);
+      border-radius: 50%;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: pulse 3s infinite;
+      z-index: 0;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        box-shadow: 0 0 200px 100px rgba(0, 114, 255, 0.1);
+      }
+      50% {
+        box-shadow: 0 0 220px 110px rgba(0, 114, 255, 0.2);
+      }
+    }
+
+    .login-box {
+      background: rgba(255, 255, 255, 0.07);
+      padding: 45px 30px;
+      border-radius: 16px;
+      backdrop-filter: blur(18px);
+      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3);
+      color: var(--white);
+      width: 100%;
+      max-width: 380px;
+      text-align: center;
+      z-index: 1;
+    }
+
+    .login-box h2 {
+      margin-bottom: 25px;
+      font-size: 26px;
+      font-weight: 600;
+      color: var(--light-blue);
+    }
+
+    .input-group {
+      position: relative;
+      margin: 20px 0;
+    }
+
+    .input-group input[type="text"],
+    .input-group input[type="password"] {
+      width: 100%;
+      padding: 14px 48px 14px 16px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--white);
+      font-size: 1rem;
+    }
+
+    .input-group input::placeholder {
+      color: #e0ecff;
+    }
+
+    .input-group input:focus {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: var(--primary-blue);
+      box-shadow: 0 0 10px rgba(0, 114, 255, 0.3);
+    }
+
+    .input-group .icon {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #cce5ff;
+      font-size: 16px;
+    }
+
+    .login-box .checkbox-label {
+      color: #ffffff;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: start;
+      gap: 8px;
+      margin-top: -10px;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      margin-top: 25px;
+      background: linear-gradient(to right, #00c6ff, #0072ff);
+      border: none;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 16px;
+      cursor: pointer;
+      color: white;
+    }
+
+    .register {
+      margin-top: 18px;
+      font-size: 0.9rem;
+      color: #cce5ff;
+    }
+
+    .register a {
+      color: #ffffff;
+      text-decoration: underline;
+    }
+
+    #error {
+      color: #ffdddd;
+      font-size: 0.85rem;
+      margin-top: 10px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="Home.html" class="logo-brand">
+      <img src="./images/logo.jpg" alt="CampusKart Logo" />
+      <span>CampusKart</span>
+    </a>
+    <div class="nav-links">
+      <a href="Home.html">Home</a>
+      <a href="signup.html">Signup</a>
+    </div>
+  </nav>
+
+  <div class="background">
+    <div class="lamp"></div>
+    <div class="login-box">
+      <h2>Welcome Back</h2>
+      <form id="loginForm">
+        <div class="input-group">
+          <input type="text" name="username" placeholder="Username" required />
+          <span class="icon"><i class="fas fa-user"></i></span>
+        </div>
+        <div class="input-group">
+          <input type="password" name="password" placeholder="Password" required />
+          <span class="icon"><i class="fas fa-lock"></i></span>
+        </div>
+        <div class="input-group checkbox-label">
+          <input type="checkbox" name="remember" id="remember" />
+          <label for="remember">Remember Me</label>
+        </div>
+        <button type="submit">Login</button>
+        <p class="register">Don't have an account? <a href="signup.html">Register</a></p>
+        <div id="error"></div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const form = document.querySelector("form");
+
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const username = form.username.value.trim();
+      const password = form.password.value.trim();
+      const rememberMe = form.querySelector("input[name='remember']")?.checked || false;
+
+      try {
+        const res = await fetch("http://localhost:5000/api/auth/login", {
+          method: "POST",
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, password, rememberMe })
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          const errorEl = document.getElementById("error");
+          errorEl.style.display = "block";
+          errorEl.textContent = data.message || "Invalid credentials";
+          return;
+        }
+
+        if (rememberMe) {
+          localStorage.setItem("campuskart_token", data.token);
+        } else {
+          localStorage.removeItem("campuskart_token");
+        }
+
+        alert("Login successful!");
+        window.location.href = "Home.html";
+      } catch (err) {
+        console.error(err);
+        alert("Server error. Please try again later.");
+      }
+    });
+  </script>
+</body>
+</html>

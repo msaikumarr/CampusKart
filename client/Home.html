@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CampusKart – Home</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    :root {
+      --primary-blue: #4F46E5;
+      --accent-red: #EF4444;
+      --dark-text: #111827;
+      --gray-text: #6B7280;
+      --white: #FFFFFF;
+      --light-gray-bg: #F9FAFB;
+      --transition: 0.3s ease;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      overflow-x: hidden;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--light-gray-bg);
+      color: var(--dark-text);
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      background-color: #165998;
+      color: white;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      gap: 1rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: white;
+      flex: 1 1 auto;
+      white-space: nowrap;
+    }
+
+    .logo-img {
+      height: 40px;
+      width: auto;
+      margin-right: 10px;
+      border-radius: 6px;
+      background: white;
+      padding: 3px;
+    }
+
+    .search-bar {
+      position: relative;
+      flex: 1 1 300px;
+      max-width: 300px;
+      width: 100%;
+    }
+
+    .search-bar input {
+      width: 100%;
+      padding: 0.6rem 2.5rem;
+      border-radius: 50px;
+      border: none;
+      font-size: 1rem;
+      outline: none;
+      background-color: white;
+      color: var(--dark-text);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .search-bar i {
+      position: absolute;
+      top: 50%;
+      left: 1rem;
+      transform: translateY(-50%);
+      color: var(--gray-text);
+    }
+
+    #suggestions {
+      position: absolute;
+      top: 110%;
+      left: 0;
+      right: 0;
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+      z-index: 1000;
+      max-height: 200px;
+      overflow-y: auto;
+      display: none;
+    }
+
+    #suggestions div {
+      padding: 0.6rem 1rem;
+      cursor: pointer;
+      border-bottom: 1px solid #f1f1f1;
+      color: var(--dark-text);
+      background-color: white;
+    }
+
+    #suggestions div:hover {
+      background-color: var(--light-gray-bg);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 0.8rem;
+      flex: 1 1 auto;
+      justify-content: flex-end;
+      min-width: 220px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: white;
+      font-weight: 500;
+      padding: 0.45rem 1rem;
+      border-radius: 50px;
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .nav-links a:hover {
+      background-color: white;
+      color: var(--primary-blue);
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .brand, .search-bar {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 0.5rem;
+      }
+
+      .nav-links {
+        justify-content: center;
+      }
+    }
+
+    .about-section {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: white;
+      padding: 4rem 2rem;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      transition: background-image 1s ease-in-out;
+    }
+
+    .about-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 0;
+    }
+
+    .about-section h2,
+    .about-section p {
+      position: relative;
+      z-index: 1;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 1rem;
+    }
+
+    .section {
+      margin-bottom: 3rem;
+    }
+
+    .section h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      font-size: 1.8rem;
+    }
+
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+    }
+
+   .grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.2rem;
+  padding: 0 1rem;
+}
+
+.card {
+  background-color: var(--white);
+  padding: 0.8rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  min-height: 320px;
+  font-size: 0.92rem;
+  max-width: 280px; /* Prevent card from growing too wide */
+  flex: 1 1 250px;   /* Responsive and even sizing */
+}
+
+.card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 0.7rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  background-color: #f0f0f0;
+}
+
+
+    .card h3 {
+      font-size: 1.05rem;
+      margin: 0.5rem 0 0.3rem;
+      color: #222;
+      font-weight: 600;
+    }
+
+    .card p {
+      margin: 0.2rem 0;
+      color: #333;
+      font-weight: 500;
+      line-height: 1.4;
+    }
+
+    .view-btn {
+      display: inline-block;
+      margin-top: auto;
+      padding: 0.4rem 1rem;
+      background-color: var(--primary-blue);
+      color: white;
+      border-radius: 50px;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+
+    .view-btn:hover {
+      background-color: #3743d9;
+    }
+
+    .footer {
+  background-color: #165998;
+  color: white;
+  padding-top: 3rem;
+  font-size: 0.95rem;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 0 2rem 2rem;
+}
+
+.footer-col {
+  flex: 1 1 250px;
+}
+
+.footer-col h4 {
+  margin-bottom: 1rem;
+  color: var(--white);
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-bottom: 2px solid rgba(255,255,255,0.3);
+  padding-bottom: 0.4rem;
+}
+
+.footer-col ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-col ul li {
+  margin-bottom: 0.5rem;
+}
+
+.footer-col ul li a {
+  color: #e5e7eb;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.footer-col ul li a:hover {
+  color: var(--accent-red);
+}
+
+.footer-logo {
+  width: 50px;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+  background: white;
+  padding: 3px;
+}
+
+.brand-col h3 {
+  margin: 0.5rem 0;
+  font-size: 1.2rem;
+  color: white;
+}
+
+.brand-col p {
+  color: #d1d5db;
+  line-height: 1.6;
+}
+
+.social-icons {
+  margin-top: 1rem;
+}
+
+.social-icons a {
+  color: white;
+  margin-right: 0.7rem;
+  font-size: 1.2rem;
+  transition: color 0.3s, transform 0.3s;
+}
+
+.social-icons a:hover {
+  color: var(--accent-red);
+  transform: scale(1.2);
+}
+
+.footer-bottom {
+  text-align: center;
+  padding: 1rem;
+  background-color: #134e85;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+@media (max-width: 768px) {
+  .footer-container {
+    flex-direction: column;
+    text-align: center;
+    padding: 2rem 1.5rem;
+  }
+
+  .footer-col h4 {
+    border: none;
+    font-size: 1rem;
+  }
+
+  .footer-col ul li {
+    margin: 0.3rem 0;
+  }
+
+  .social-icons {
+    justify-content: center;
+  }
+}
+
+    .about-campuskart {
+  background-color: var(--white);
+  padding: 3rem 1.5rem;
+  border-top: 1px solid #e5e7eb;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.about-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2rem;
+  justify-content: space-between;
+}
+
+.about-logo img {
+  width: 160px;
+  height: auto;
+  border-radius: 10px;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.about-info {
+  flex: 1;
+  min-width: 280px;
+}
+
+.about-info h2 {
+  font-size: 1.6rem;
+  margin-bottom: 1rem;
+  color: var(--primary-blue);
+}
+
+.about-info h2 span {
+  color: var(--accent-red);
+}
+
+.about-info p {
+  font-size: 1rem;
+  color: var(--gray-text);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.about-info .features {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.about-info .features div {
+  font-size: 0.95rem;
+  color: var(--dark-text);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.about-info .features i {
+  color: var(--primary-blue);
+  font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+  .about-container {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .about-logo img {
+    margin: 0 auto;
+  }
+}
+
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="brand">
+      <img src="images/logo.jpg" alt="CampusKart Logo" class="logo-img" />
+      <span>CampusKart</span>
+    </div>
+    <span id="welcomeUser" style="font-weight: 500;"></span>
+    <div class="search-bar">
+      <i class="fas fa-search"></i>
+      <input type="text" id="searchInput" placeholder="Search items..." oninput="handleSearch()" />
+      <div id="suggestions"></div>
+    </div>
+    <div class="nav-links" id="navLinks"></div>
+  </nav>
+
+  <section class="about-section">
+    <h2>Welcome to CampusKart!</h2>
+    <p>CampusKart is your one-stop student marketplace built to simplify buying and selling items within your college community.</p>
+  </section>
+
+  <div class="container">
+    <section class="section">
+      <h2>Latest Listings</h2>
+      <div class="grid" id="latestItemsContainer">
+        <p>Loading items...</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Popular Categories</h2>
+      <div class="grid">
+        <div class="card" onclick="filterByCategory('Books')">
+          <img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=800&q=80" alt="Books" />
+          <h3>Books</h3>
+          <p>Textbooks and notes</p>
+        </div>
+        <div class="card" onclick="filterByCategory('Electronics')">
+          <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=800&q=80" alt="Electronics" />
+          <h3>Electronics</h3>
+          <p>Laptops, gadgets, and tools</p>
+        </div>
+        <div class="card" onclick="filterByCategory('Furniture')">
+          <img src="https://images.pexels.com/photos/1648776/pexels-photo-1648776.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Furniture" />
+          <h3>Furniture</h3>
+          <p>Chairs, tables, and more</p>
+        </div>
+        <div class="card" onclick="filterByCategory('Stationery')">
+          <img src="https://images.pexels.com/photos/45718/pexels-photo-45718.jpeg?auto=compress&cs=tinysrgb&h=750" alt="Stationery" />
+          <h3>Stationery</h3>
+          <p>Pens, files, art items</p>
+        </div>
+      </div>
+    </section>
+  </div>
+<section class="about-campuskart">
+  <div class="about-container">
+    <div class="about-logo">
+      <img src="images/logo.jpg" alt="CampusKart Logo" />
+    </div>
+    <div class="about-info">
+      <h2>About <span>CampusKart</span></h2>
+      <p>
+        CampusKart is a trusted student marketplace to <strong>buy</strong>, <strong>sell</strong>, and
+        <strong>exchange</strong> items like books, gadgets, and furniture within your college community.
+        Our goal is to make campus trading safe, easy, and rewarding.
+      </p>
+      <div class="features">
+        <div><i class="fas fa-tag"></i> No extra fees or commissions</div>
+        <div><i class="fas fa-user-friends"></i> Built by students, for students</div>
+        <div><i class="fas fa-shield-alt"></i> Secure login & verified users</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div class="footer-col brand-col">
+      <img src="images/logo.jpg" alt="CampusKart Logo" class="footer-logo" />
+      <h3>CampusKart</h3>
+      <p>Your trusted campus marketplace built by students, for students.</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="product.html">Products</a></li>
+        <li><a href="sell.html">Sell Item</a></li>
+        <li><a href="wishlist.html">Wishlist</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Connect</h4>
+      <ul>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Contact Support</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms of Use</a></li>
+      </ul>
+      <div class="social-icons">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 CampusKart – All rights reserved.</p>
+  </div>
+</footer>
+
+  <script>
+    const API_URL = "http://localhost:5000/api/items";
+    let allItems = [];
+    let currentUser = null;
+
+    async function fetchLatestItems() {
+      try {
+        const res = await fetch(API_URL);
+        allItems = await res.json();
+        displayLatestItems(allItems.slice().reverse().slice(0, 8));
+      } catch {
+        document.getElementById("latestItemsContainer").innerHTML = "<p>Failed to load items.</p>";
+      }
+    }
+
+    function displayLatestItems(items) {
+      const container = document.getElementById("latestItemsContainer");
+      container.innerHTML = "";
+
+      if (!items || items.length === 0) {
+        container.innerHTML = "<p>No items found.</p>";
+        return;
+      }
+
+      items.forEach(item => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `
+          <img src="http://localhost:5000${item.image}" alt="${item.title}" loading="lazy" />
+          <h3>${item.title}</h3>
+          <p><strong>Category:</strong> ${item.category}</p>
+          <p><strong>Price:</strong> ₹${item.price}</p>
+          <p><strong>Description:</strong> ${item.description || "No description"}</p>
+          <a href="item?id=${item._id}" class="view-btn">View Details</a>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function handleSearch() {
+      const input = document.getElementById("searchInput").value.toLowerCase();
+      const suggestionsBox = document.getElementById("suggestions");
+
+      if (!input) {
+        suggestionsBox.style.display = "none";
+        return;
+      }
+
+      const matches = allItems
+        .filter(item => item.title.toLowerCase().includes(input))
+        .map(item => item.title);
+
+      const unique = [...new Set(matches)].slice(0, 5);
+
+      suggestionsBox.innerHTML = unique.length
+        ? unique.map(title => `<div onclick="selectSuggestion('${title}')">${title}</div>`).join("")
+        : "<div>No results</div>";
+
+      suggestionsBox.style.display = "block";
+    }
+
+    function selectSuggestion(title) {
+      document.getElementById("searchInput").value = title;
+      document.getElementById("suggestions").style.display = "none";
+      const matched = allItems.filter(item => item.title.toLowerCase().includes(title.toLowerCase()));
+      displayLatestItems(matched.slice(0, 8));
+    }
+
+    document.addEventListener("click", e => {
+      if (!e.target.closest(".search-bar")) {
+        document.getElementById("suggestions").style.display = "none";
+      }
+    });
+
+    const aboutSection = document.querySelector(".about-section");
+    const backgrounds = [
+      "https://images.unsplash.com/photo-1571260899304-425eee4c7efc?auto=format&fit=crop&w=1950&q=80",
+      "./images/background2.jpg",
+      "./images/background4.jpg"
+    ];
+    let current = 0;
+    function cycleBackground() {
+      aboutSection.style.backgroundImage = `url('${backgrounds[current]}')`;
+      current = (current + 1) % backgrounds.length;
+    }
+    cycleBackground();
+    setInterval(cycleBackground, 4000);
+
+    function renderNavLinks() {
+      const navLinks = document.getElementById("navLinks");
+      navLinks.innerHTML = "";
+
+      if (currentUser) {
+        navLinks.innerHTML = `
+          <a href="wishlist.html">Wishlist</a>
+          <a href="product.html">Products</a>
+          <a href="sell.html">Sell</a>
+          <a href="#" id="logoutLink">Logout</a>
+        `;
+        document.getElementById("welcomeUser").textContent = `Welcome, ${currentUser.username}`;
+        setTimeout(() => {
+          document.getElementById("logoutLink").addEventListener("click", async () => {
+            try {
+              await fetch("http://localhost:5000/api/auth/logout", {
+                method: "POST",
+                credentials: "include"
+              });
+              localStorage.removeItem("campuskart_token");
+              window.location.href = "login.html";
+            } catch {
+              alert("Logout failed");
+            }
+          });
+        }, 0);
+      } else {
+        navLinks.innerHTML = `
+          <a href="product.html">Products</a>
+          <a href="sell.html">Sell</a>
+          <a href="login.html">Login</a>
+          <a href="signup.html">Signup</a>
+        `;
+        document.getElementById("welcomeUser").textContent = "";
+      }
+    }
+
+    async function checkAuth() {
+      try {
+        const res = await fetch("http://localhost:5000/api/auth/verify", {
+          credentials: "include"
+        });
+
+        if (!res.ok) {
+          currentUser = null;
+          renderNavLinks();
+          return;
+        }
+
+        const data = await res.json();
+        currentUser = data;
+        renderNavLinks();
+      } catch {
+        currentUser = null;
+        renderNavLinks();
+      }
+    }
+
+    checkAuth();
+    fetchLatestItems();
+  </script>
+</body>
+</html>

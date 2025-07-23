@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Edit Item – CampusKart</title>
+  <style>
+    :root {
+      --primary-blue: #165998;
+      --white: #ffffff;
+      --light-gray: #f0f2f5;
+      --dark-text: #1f2937;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background-color: var(--light-gray);
+      display: flex;
+      flex-direction: column;
+    }
+
+    nav {
+      background-color: var(--primary-blue);
+      padding: 1rem 2rem;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      flex-wrap: wrap;
+    }
+
+    .logo-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .logo-brand img {
+      height: 36px;
+      width: 36px;
+      border-radius: 6px;
+    }
+
+    .logo-brand span {
+      font-size: 1.6rem;
+      font-weight: bold;
+      color: white;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 6px 12px;
+      border-radius: 20px;
+      background-color: rgba(255, 255, 255, 0.15);
+      transition: 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      background-color: white;
+      color: var(--primary-blue);
+    }
+
+    .container {
+      flex: 1;
+      max-width: 500px;
+      margin: 2rem auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      width: 90%;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 1rem;
+      color: var(--dark-text);
+      font-size: 1.6rem;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      margin-bottom: 18px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    button {
+      background-color: var(--primary-blue);
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1rem;
+      width: 100%;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #0e4a7f;
+    }
+
+    footer {
+      background-color: var(--primary-blue);
+      color: white;
+      text-align: center;
+      padding: 14px 0;
+      font-size: 0.95rem;
+      margin-top: auto;
+    }
+
+    @media (max-width: 600px) {
+      nav {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1rem;
+      }
+
+      .nav-links {
+        margin-top: 8px;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      .container {
+        margin: 1.5rem 1rem;
+        padding: 1.5rem;
+      }
+
+      h2 {
+        font-size: 1.3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="Home.html" class="logo-brand">
+      <img src="./images/logo.jpg" alt="CampusKart Logo">
+      <span>CampusKart</span>
+    </a>
+    <div class="nav-links">
+      <a href="Home.html">Home</a>
+      <a href="product.html">Products</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h2>Edit Item</h2>
+    <form id="editForm" enctype="multipart/form-data">
+      <input type="text" name="title" placeholder="Item Title" required />
+      <input type="number" name="price" placeholder="Price" required />
+      <textarea name="description" placeholder="Description"></textarea>
+      <input type="file" name="image" accept="image/*" />
+      <button type="submit">Update Item</button>
+    </form>
+  </div>
+
+  <footer>
+    &copy; 2025 CampusKart. All rights reserved.
+  </footer>
+
+  <script>
+    const id = new URLSearchParams(window.location.search).get("id");
+    const form = document.getElementById("editForm");
+
+    async function protectRoute() {
+      const res = await fetch("http://localhost:5000/api/auth/verify", { credentials: "include" });
+      if (!res.ok) window.location.href = "login.html";
+    }
+
+    async function loadItem() {
+      const res = await fetch(`http://localhost:5000/api/items/${id}`);
+      const item = await res.json();
+      if (res.ok) {
+        form.title.value = item.title;
+        form.price.value = item.price;
+        form.description.value = item.description;
+      }
+    }
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const formData = new FormData(form);
+      const res = await fetch(`http://localhost:5000/api/items/${id}`, {
+        method: "PUT",
+        body: formData,
+        credentials: "include"
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        alert("Item updated!");
+        window.location.href = `item.html?id=${id}`;
+      } else {
+        alert("❌ " + (data.message || "Update failed"));
+      }
+    });
+
+    protectRoute();
+    loadItem();
+  </script>
+</body>
+</html>

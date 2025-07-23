@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Products – CampusKart</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    :root {
+      --primary-blue: #165998;
+      --accent-red: #EF4444;
+      --white: #FFFFFF;
+      --gray-text: #6B7280;
+      --light-gray-bg: #F9FAFB;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--light-gray-bg);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      background-color: var(--primary-blue);
+      color: white;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      gap: 1rem;
+    }
+
+    .logo-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .logo-brand img {
+      height: 36px;
+      width: 36px;
+      border-radius: 6px;
+    }
+
+    .logo-brand span {
+      font-size: 1.6rem;
+      font-weight: bold;
+      color: white;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 0.8rem;
+      flex: 1 1 auto;
+      justify-content: flex-end;
+      min-width: 220px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: white;
+      font-weight: 500;
+      padding: 0.45rem 1rem;
+      border-radius: 50px;
+      background-color: rgba(255, 255, 255, 0.1);
+      transition: 0.3s;
+    }
+
+    .nav-links a:hover {
+      background-color: white;
+      color: var(--primary-blue);
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .logo-brand {
+        justify-content: center;
+      }
+
+      .nav-links {
+        justify-content: center;
+      }
+    }
+
+    .toggle-links {
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .toggle-links a {
+      margin: 0 10px;
+      text-decoration: none;
+      font-weight: 600;
+      color: var(--primary-blue);
+    }
+
+    .toggle-links a.active {
+      text-decoration: underline;
+      color: #0d3b70;
+    }
+
+    #product-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 20px;
+      padding: 0 1rem 40px;
+    }
+
+    .item-card {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 3px 6px rgb(0 0 0 / 0.1);
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      transition: box-shadow 0.3s;
+    }
+
+    .item-card:hover {
+      box-shadow: 0 6px 12px rgb(0 0 0 / 0.15);
+    }
+
+    .item-card img {
+      max-width: 100%;
+      height: 140px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      background: #f0f0f0;
+    }
+
+    .item-card h3 {
+      margin: 0 0 6px;
+      font-size: 1.1rem;
+      color: #111827;
+    }
+
+    .item-card p {
+      margin: 0 0 12px;
+      color: var(--gray-text);
+      font-weight: 600;
+      font-size: 1rem;
+    }
+
+    .btn {
+      text-decoration: none;
+      font-weight: 600;
+      margin: 4px;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .view-btn {
+      color: #2563eb;
+      border: 1px solid #2563eb;
+      background: white;
+    }
+
+    .view-btn:hover {
+      background-color: #2563eb;
+      color: white;
+    }
+
+    .edit-btn {
+      color: #15803d;
+      border: 1px solid #15803d;
+      background: white;
+    }
+
+    .edit-btn:hover {
+      background-color: #15803d;
+      color: white;
+    }
+
+    .delete-btn {
+      color: #dc2626;
+      border: 1px solid #dc2626;
+      background: white;
+    }
+
+    .delete-btn:hover {
+      background-color: #dc2626;
+      color: white;
+    }
+
+    footer {
+      background-color: var(--primary-blue);
+      color: white;
+      text-align: center;
+      padding: 0.7rem;
+      font-size: 0.85rem;
+      margin-top: auto;
+    }
+
+    footer a {
+      color: white;
+      text-decoration: underline;
+    }
+
+    footer .social-icons {
+      margin-top: 6px;
+    }
+
+    footer .social-icons i {
+      margin: 0 5px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+
+    footer .social-icons i:hover {
+      transform: scale(1.2);
+      color: var(--accent-red);
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="Home.html" class="logo-brand">
+      <img src="./images/logo.jpg" alt="CampusKart Logo" />
+      <span>CampusKart</span>
+    </a>
+    <div class="nav-links" id="navLinks">
+      <!-- Filled dynamically -->
+    </div>
+  </nav>
+
+  <div class="toggle-links" id="toggleLinks">
+    <a href="product.html" id="allItemsLink">All Items</a> |
+    <a href="product?mode=my" id="myItemsLink">My Items</a>
+  </div>
+
+  <div id="product-list">
+    <p>Loading items...</p>
+  </div>
+
+  <footer>
+    © 2025 CampusKart | Built by Students for Students |
+    <a href="#">Contact Us</a>
+    <div class="social-icons">
+      <i class="fab fa-facebook-f"></i>
+      <i class="fab fa-instagram"></i>
+      <i class="fab fa-twitter"></i>
+      <i class="fab fa-linkedin-in"></i>
+    </div>
+  </footer>
+
+  <script>
+    const productContainer = document.getElementById("product-list");
+    const navLinks = document.getElementById("navLinks");
+    const urlParams = new URLSearchParams(window.location.search);
+    const isMyItems = urlParams.get("mode") === "my";
+
+    const API_URL = "http://localhost:5000/api/items";
+    let currentUserId = null;
+    let isAdmin = false;
+
+    document.getElementById("allItemsLink").classList.toggle("active", !isMyItems);
+    document.getElementById("myItemsLink").classList.toggle("active", isMyItems);
+
+    async function verifyUser() {
+      try {
+        const res = await fetch("http://localhost:5000/api/auth/verify", {
+          credentials: "include"
+        });
+
+        if (res.ok) {
+          const user = await res.json();
+          currentUserId = user._id;
+          isAdmin = user.isAdmin;
+          renderNavLinks(true);
+          return true;
+        } else {
+          renderNavLinks(false);
+          return false;
+        }
+      } catch {
+        renderNavLinks(false);
+        return false;
+      }
+    }
+// <a href="product.html" class="active">Products</a>
+    function renderNavLinks(isLoggedIn) {
+      navLinks.innerHTML = isLoggedIn ? `
+        <a href="Home.html">Home</a>
+       
+        <a href="sell.html">Sell</a>
+        <a href="wishlist.html">Wishlist</a>
+        <a href="#" id="logoutBtn">Logout</a>
+      ` : `
+        <a href="Home.html">Home</a>
+        <a href="sell.html" class="active">sell</a>
+        <a href="login.html">Login</a>
+        <a href="signup.html">Signup</a>
+      `;
+
+      const logoutBtn = document.getElementById("logoutBtn");
+      if (logoutBtn) {
+        logoutBtn.addEventListener("click", async (e) => {
+          e.preventDefault();
+          await fetch("http://localhost:5000/api/auth/logout", {
+            method: "POST",
+            credentials: "include"
+          });
+          location.reload();
+        });
+      }
+    }
+
+    async function fetchItems() {
+      const isLoggedIn = await verifyUser();
+
+      if (isMyItems && !isLoggedIn) {
+        window.location.href = "login.html";
+        return;
+      }
+
+      try {
+        const res = await fetch(API_URL);
+        const items = await res.json();
+
+        const filtered = isMyItems
+          ? items.filter(item => {
+              const createdById = typeof item.createdBy === 'string'
+                ? item.createdBy
+                : item.createdBy?._id;
+              return createdById === currentUserId;
+            })
+          : items;
+
+        if (filtered.length === 0) {
+          productContainer.innerHTML = "<p style='text-align:center;'>No items found.</p>";
+          return;
+        }
+
+        productContainer.innerHTML = "";
+        filtered.forEach(item => {
+          const card = document.createElement("div");
+          card.className = "item-card";
+
+          const imgSrc = item.image
+            ? `http://localhost:5000${item.image}`
+            : "https://via.placeholder.com/220x140?text=No+Image";
+
+          const createdById = typeof item.createdBy === 'string'
+            ? item.createdBy
+            : item.createdBy?._id;
+
+          const canDelete = (currentUserId && createdById === currentUserId) || isAdmin;
+
+          card.innerHTML = `
+            <img src="${imgSrc}" alt="${item.title}" />
+            <h3>${item.title}</h3>
+            <p>₹${Number(item.price).toFixed(2)}</p>
+            <a href="item?id=${item._id}" class="btn view-btn"><i class="fas fa-eye"></i> View</a>
+            ${createdById === currentUserId ? `<a href="edit.html?id=${item._id}" class="btn edit-btn"><i class="fas fa-edit"></i> Edit</a>` : ""}
+            ${canDelete ? `<button class="btn delete-btn" data-id="${item._id}"><i class="fas fa-trash"></i> Delete</button>` : ""}
+          `;
+
+          productContainer.appendChild(card);
+        });
+
+        document.querySelectorAll(".delete-btn").forEach(button => {
+          button.addEventListener("click", async () => {
+            const id = button.getAttribute("data-id");
+            if (confirm("Are you sure you want to delete this item?")) {
+              try {
+                const res = await fetch(`${API_URL}/${id}`, {
+                  method: "DELETE",
+                  credentials: "include"
+                });
+                if (res.ok) {
+                  alert("Item deleted.");
+                  fetchItems();
+                } else {
+                  alert("Failed to delete item.");
+                }
+              } catch {
+                alert("Server error during deletion.");
+              }
+            }
+          });
+        });
+      } catch (err) {
+        productContainer.innerHTML = "<p>❌ Failed to load items.</p>";
+      }
+    }
+
+    fetchItems();
+  </script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+# Node modules
+node_modules/
+
+# Environment variables
+.env
+
+# Uploaded files
+/uploads/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Logs and debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Optional IDE settings
+.vscode/
+.idea/
+
+# OS generated
+*.log

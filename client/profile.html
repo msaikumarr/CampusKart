@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Seller Profile – CampusKart</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    :root {
+      --primary-blue: #165998;
+      --white: #ffffff;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f9fafb;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    nav {
+      background-color: var(--primary-blue);
+      color: white;
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .logo-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .logo-brand img {
+      height: 36px;
+      width: 36px;
+      border-radius: 6px;
+    }
+
+    .logo-brand span {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: white;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      border-radius: 20px;
+      padding: 6px 12px;
+      background: rgba(255, 255, 255, 0.15);
+      transition: background-color 0.3s;
+      font-size: 0.95rem;
+    }
+
+    .nav-links a:hover {
+      background: white;
+      color: var(--primary-blue);
+    }
+
+    h2 {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 1.6rem;
+      color: #111827;
+    }
+
+    #profileInfo {
+      max-width: 600px;
+      margin: 20px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    #profileInfo p {
+      font-size: 1rem;
+      margin: 10px 0;
+    }
+
+    .view-items-btn {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 8px 16px;
+      font-size: 0.95rem;
+      border-radius: 6px;
+      border: 1px solid #2563eb;
+      background-color: white;
+      color: #2563eb;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+
+    .view-items-btn:hover {
+      background-color: #2563eb;
+      color: white;
+    }
+
+    footer {
+      background-color: var(--primary-blue);
+      color: white;
+      text-align: center;
+      padding: 12px;
+      font-size: 0.9rem;
+      margin-top: auto;
+    }
+
+    @media (max-width: 600px) {
+      nav {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .nav-links {
+        justify-content: center;
+        margin-top: 8px;
+      }
+
+      .nav-links a {
+        padding: 5px 10px;
+        font-size: 0.85rem;
+      }
+
+      .logo-brand span {
+        font-size: 1.3rem;
+      }
+
+      h2 {
+        font-size: 1.3rem;
+      }
+
+      #profileInfo {
+        margin: 15px 10px;
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="Home.html" class="logo-brand">
+      <img src="./images/logo.jpg" alt="CampusKart Logo" />
+      <span>CampusKart</span>
+    </a>
+    <div class="nav-links">
+      <a href="Home.html">Home</a>
+      <a href="product.html">Products</a>
+      <a href="wishlist.html">Wishlist</a>
+      <a href="profile.html">Profile</a>
+    </div>
+  </nav>
+
+  <h2>Seller Profile</h2>
+  <div id="profileInfo">Loading...</div>
+
+  <footer>
+    &copy; 2025 CampusKart. Built by Students for Students.
+  </footer>
+
+  <script>
+    const userId = new URLSearchParams(window.location.search).get("user");
+
+    if (!userId) {
+      document.getElementById("profileInfo").innerHTML = "<p>No user ID provided in URL.</p>";
+    } else {
+      verifyUser();
+      loadProfile();
+    }
+
+    async function verifyUser() {
+      try {
+        const res = await fetch("http://localhost:5000/api/auth/verify", {
+          credentials: "include"
+        });
+        if (!res.ok) window.location.href = "login.html";
+      } catch {
+        window.location.href = "login.html";
+      }
+    }
+
+    async function loadProfile() {
+      try {
+        const res = await fetch(`http://localhost:5000/api/users/${userId}`);
+        const user = await res.json();
+
+        if (res.ok) {
+          document.getElementById("profileInfo").innerHTML = `
+            <p><i class="fas fa-user"></i> <strong>Username:</strong> ${user.username}</p>
+            <p><i class="fas fa-envelope"></i> <strong>Email:</strong> ${user.email || 'Not Provided'}</p>
+            <p><i class="fas fa-phone"></i> <strong>Phone:</strong> ${user.phone || 'Not Provided'}</p>
+            <a href="product.html?seller=${user._id}" class="view-items-btn">
+              <i class="fas fa-box"></i> View Seller's Items
+            </a>
+          `;
+        } else {
+          document.getElementById("profileInfo").textContent = "Error loading profile";
+        }
+      } catch (err) {
+        console.error("Error fetching profile:", err);
+        document.getElementById("profileInfo").textContent = "Server error";
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Signup – CampusKart</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    :root {
+      --primary-blue: #4F46E5;
+      --light-blue: #d0e8ff;
+      --white: #ffffff;
+      --gray-text: #6B7280;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    html, body {
+      height: 100%;
+      background: url("./images/loginandsignupbg.png") no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      flex-direction: column;
+    }
+
+    nav {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      background-color: #165998;
+      color: white;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      flex-wrap: wrap;
+    }
+
+    .logo-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .logo-brand img {
+      height: 36px;
+      width: 36px;
+      border-radius: 6px;
+    }
+
+    .logo-brand span {
+      font-size: 1.6rem;
+      font-weight: bold;
+      color: white;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 0.8rem;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: white;
+      font-weight: 500;
+      padding: 0.45rem 1rem;
+      border-radius: 50px;
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .nav-links a:hover {
+      background-color: white;
+      color: var(--primary-blue);
+    }
+
+    .main-container {
+      flex-grow: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .signup-box {
+      background: rgba(255, 255, 255, 0.07);
+      padding: 2rem;
+      border-radius: 16px;
+      backdrop-filter: blur(18px);
+      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3);
+      color: var(--white);
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    .signup-box h2 {
+      margin-bottom: 1rem;
+      font-size: 1.6rem;
+      color: var(--light-blue);
+    }
+
+    .input-group {
+      position: relative;
+      margin: 1rem 0;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 14px 48px 14px 16px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--white);
+      font-size: 1rem;
+    }
+
+    .input-group input::placeholder {
+      color: #e0ecff;
+    }
+
+    .input-group .icon {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #cce5ff;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      margin-top: 1rem;
+      background: linear-gradient(to right, #00c6ff, #0072ff);
+      border: none;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      color: white;
+    }
+
+    .login {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      color: #cce5ff;
+    }
+
+    .login a {
+      color: #ffffff;
+      text-decoration: underline;
+    }
+
+    .error-message {
+      margin-top: 10px;
+      color: #ffbaba;
+      font-size: 0.85rem;
+    }
+
+    @media (max-width: 480px) {
+      nav {
+        flex-direction: column;
+        gap: 0.5rem;
+        padding: 0.8rem 1rem;
+      }
+
+      .logo-brand {
+        justify-content: center;
+      }
+
+      .logo-brand span {
+        font-size: 1.4rem;
+      }
+
+      .nav-links {
+        justify-content: center;
+      }
+
+      .nav-links a {
+        padding: 0.3rem 0.8rem;
+        font-size: 0.85rem;
+      }
+
+      .signup-box {
+        padding: 1.5rem;
+      }
+
+      .signup-box h2 {
+        font-size: 1.4rem;
+      }
+
+      button {
+        font-size: 0.95rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="Home.html" class="logo-brand">
+      <img src="./images/logo.jpg" alt="CampusKart Logo" />
+      <span>CampusKart</span>
+    </a>
+    <div class="nav-links">
+      <a href="Home.html">Home</a>
+      <a href="login.html">Login</a>
+    </div>
+  </nav>
+
+  <div class="main-container">
+    <div class="signup-box">
+      <h2>Create Account</h2>
+      <form id="signupForm">
+        <div class="input-group">
+          <input type="text" name="username" placeholder="Username" required />
+          <span class="icon"><i class="fas fa-user"></i></span>
+        </div>
+        <div class="input-group">
+          <input type="email" name="email" placeholder="Email" required />
+          <span class="icon"><i class="fas fa-envelope"></i></span>
+        </div>
+        <div class="input-group">
+          <input type="text" name="phone" placeholder="Mobile Number" pattern="[6-9]{1}[0-9]{9}" required />
+          <span class="icon"><i class="fas fa-phone"></i></span>
+        </div>
+        <div class="input-group">
+          <input type="password" name="password" placeholder="Password" required />
+          <span class="icon"><i class="fas fa-lock"></i></span>
+        </div>
+        <div class="input-group">
+          <input type="password" name="confirmPassword" placeholder="Confirm Password" required />
+          <span class="icon"><i class="fas fa-lock"></i></span>
+        </div>
+        <button type="submit">Signup</button>
+        <p class="login">Already have an account? <a href="login.html">Login</a></p>
+        <p class="error-message" id="errorMsg"></p>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById("signupForm");
+    const errorMsg = document.getElementById("errorMsg");
+
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const username = form.username.value.trim();
+      const email = form.email.value.trim();
+      const phone = form.phone.value.trim();
+      const password = form.password.value;
+      const confirmPassword = form.confirmPassword.value;
+
+      if (password !== confirmPassword) {
+        errorMsg.textContent = "Passwords do not match";
+        return;
+      }
+
+      const phoneRegex = /^[6-9][0-9]{9}$/;
+      if (!phoneRegex.test(phone)) {
+        errorMsg.textContent = "Invalid mobile number. Must be 10 digits and start with 6-9.";
+        return;
+      }
+
+      try {
+        const res = await fetch("http://localhost:5000/api/auth/signup", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, email, phone, password })
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          errorMsg.textContent = data.message || "Signup failed";
+        } else {
+          alert("Account created successfully. Please login.");
+          window.location.href = "login.html";
+        }
+      } catch (err) {
+        errorMsg.textContent = "Server error. Please try again later.";
+      }
+    });
+  </script>
+</body>
+</html>

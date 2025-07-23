@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CampusKart – Sell Item</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    :root {
+      --primary-blue: #165998;
+      --accent-red: #EF4444;
+      --white: #FFFFFF;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background: url('https://img.freepik.com/free-photo/arrangement-black-friday-shopping-carts-with-copy-space_23-2148667047.jpg?semt=ais_hybrid&w=740') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      flex-direction: column;
+    }
+
+    nav {
+      background-color: var(--primary-blue);
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 20px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      flex-wrap: wrap;
+    }
+
+    .logo-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .logo-brand img {
+      height: 36px;
+      width: 36px;
+      border-radius: 6px;
+    }
+
+    .logo-brand span {
+      font-size: 1.6rem;
+      font-weight: bold;
+      color: white;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 20px;
+      background-color: rgba(255, 255, 255, 0.15);
+      transition: all 0.3s ease;
+      font-size: 0.95rem;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active-link {
+      background-color: white;
+      color: var(--primary-blue);
+    }
+
+    .container {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px;
+    }
+
+    form {
+      background-color: rgba(255, 255, 255, 0.95);
+      padding: 20px;
+      border-radius: 10px;
+      width: 100%;
+      max-width: 400px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    h2 {
+      text-align: center;
+      font-size: 1.4rem;
+      color: #1e293b;
+    }
+
+    label {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #111827;
+    }
+
+    input, select, textarea {
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 0.9rem;
+    }
+
+    textarea {
+      resize: none;
+      height: 60px;
+    }
+
+    #otherCategoryWrapper {
+      display: none;
+    }
+
+    .note {
+      font-size: 0.75rem;
+      color: #555;
+    }
+
+    button {
+      background-color: var(--accent-red);
+      color: white;
+      padding: 10px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #c51f1f;
+    }
+
+    #successMessage {
+      color: green;
+      font-size: 0.9rem;
+      text-align: center;
+      display: none;
+    }
+
+    footer {
+      background-color: var(--primary-blue);
+      color: white;
+      text-align: center;
+      padding: 10px 8px;
+      font-size: 0.9rem;
+    }
+
+    footer a {
+      color: white;
+      text-decoration: underline;
+    }
+
+    footer .social-icons {
+      margin-top: 6px;
+    }
+
+    footer .social-icons i {
+      margin: 0 5px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+
+    footer .social-icons i:hover {
+      transform: scale(1.2);
+      color: var(--accent-red);
+    }
+
+    @media (max-width: 480px) {
+      form {
+        max-width: 90vw;
+        padding: 15px;
+      }
+
+      h2 {
+        font-size: 1.2rem;
+      }
+
+      .nav-links {
+        justify-content: center;
+        gap: 10px;
+      }
+
+      .nav-links a {
+        font-size: 0.85rem;
+        padding: 5px 10px;
+      }
+
+      .logo-brand span {
+        font-size: 1.3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="Home.html" class="logo-brand">
+      <img src="./images/logo.jpg" alt="CampusKart Logo">
+      <span>CampusKart</span>
+    </a>
+    <div class="nav-links">
+      <a href="Home.html">Home</a>
+      <a href="product.html">Products</a>
+      <a href="sell.html" class="active-link">Sell</a>
+      <a href="#" id="logoutBtn">Logout</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <form id="itemForm" enctype="multipart/form-data">
+      <h2>Sell Your Item</h2>
+
+      <label for="itemName">Item Name</label>
+      <input type="text" id="itemName" name="title" required placeholder="e.g. Mechanics Book" />
+
+      <label for="category">Category</label>
+      <select id="category" name="category" required>
+        <option value="">-- Select --</option>
+        <option value="Books">Books</option>
+        <option value="Electronics">Electronics</option>
+        <option value="Furniture">Furniture</option>
+        <option value="Stationery">Stationery</option>
+        <option value="Others">Others</option>
+      </select>
+
+      <div id="otherCategoryWrapper">
+        <label for="otherCategory">Specify Category</label>
+        <input type="text" id="otherCategory" name="otherCategory" />
+      </div>
+
+      <label for="price">Price (INR)</label>
+      <input type="number" id="price" name="price" required placeholder="e.g. 300" />
+
+      <label for="description">Description</label>
+      <textarea id="description" name="description" placeholder="Brief description"></textarea>
+
+      <label for="image">Upload Image</label>
+      <input type="file" id="image" name="image" accept="image/*" required />
+      <p class="note">Max size 2MB. JPG/PNG only.</p>
+
+      <button type="submit">Add Item</button>
+      <p id="successMessage">✅ Item added successfully!</p>
+    </form>
+  </div>
+
+  <footer>
+    © 2025 CampusKart | Built by Students for Students |
+    <a href="#">Contact</a>
+    <div class="social-icons">
+      <i class="fab fa-facebook-f"></i>
+      <i class="fab fa-instagram"></i>
+      <i class="fab fa-twitter"></i>
+      <i class="fab fa-linkedin-in"></i>
+    </div>
+  </footer>
+
+  <script>
+    const API_URL = "http://localhost:5000/api/items";
+    const AUTH_URL = "http://localhost:5000/api/auth";
+    const form = document.getElementById('itemForm');
+    const categorySelect = document.getElementById('category');
+    const otherCategoryWrapper = document.getElementById('otherCategoryWrapper');
+    const otherCategoryInput = document.getElementById('otherCategory');
+    const successMessage = document.getElementById('successMessage');
+    const logoutBtn = document.getElementById('logoutBtn');
+
+    categorySelect.addEventListener('change', () => {
+      if (categorySelect.value === 'Others') {
+        otherCategoryWrapper.style.display = 'block';
+        otherCategoryInput.setAttribute('required', 'true');
+      } else {
+        otherCategoryWrapper.style.display = 'none';
+        otherCategoryInput.removeAttribute('required');
+      }
+    });
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const formData = new FormData(form);
+      if (categorySelect.value === "Others") {
+        formData.set("category", otherCategoryInput.value);
+      }
+
+      try {
+        const response = await fetch(API_URL, {
+          method: "POST",
+          body: formData,
+          credentials: "include"
+        });
+
+        const result = await response.json();
+        if (!response.ok) throw new Error(result.message || "Failed to add item");
+
+        successMessage.style.display = "block";
+        form.reset();
+
+        setTimeout(() => {
+          successMessage.style.display = "none";
+          window.location.href = "Home.html";
+        }, 2000);
+      } catch (error) {
+        alert("❌ " + error.message);
+      }
+    });
+
+    logoutBtn.addEventListener('click', async (e) => {
+      e.preventDefault();
+      try {
+        const res = await fetch(`${AUTH_URL}/logout`, {
+          method: 'POST',
+          credentials: 'include'
+        });
+        if (res.ok) window.location.href = 'login.html';
+        else alert('Logout failed');
+      } catch {
+        alert('Logout error');
+      }
+    });
+
+    async function verifyUser() {
+      try {
+        const res = await fetch(`${AUTH_URL}/verify`, {
+          credentials: 'include'
+        });
+        if (!res.ok) window.location.href = "login.html";
+      } catch {
+        window.location.href = "login.html";
+      }
+    }
+
+    verifyUser();
+  </script>
+
+</body>
+</html>
