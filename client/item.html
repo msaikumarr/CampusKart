@@ -6,78 +6,119 @@
   <title>Item Details – CampusKart</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    :root {
+      --primary-blue: #165998;
+      --accent-red: #EF4444;
+      --gray: #6B7280;
+      --light-bg: #f9fafb;
+      --white: #ffffff;
+    }
+
+    * {
       margin: 0;
-      padding: 20px;
-      background-color: #f9fafb;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--light-bg);
+      display: flex;
+      flex-direction: column;
     }
 
     nav {
-      background-color: #165998;
+      background-color: var(--primary-blue);
       color: white;
-      padding: 12px 20px;
+      padding: 1rem 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 20px;
+      flex-wrap: wrap;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
     }
 
-    nav .brand {
-      font-size: 1.5rem;
+    .brand {
+      font-size: 1.6rem;
       font-weight: bold;
     }
 
-    nav .nav-links a {
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .nav-links a {
       color: white;
-      margin-left: 15px;
       text-decoration: none;
       font-weight: 600;
+      padding: 6px 14px;
       border-radius: 20px;
-      padding: 6px 12px;
-      background: rgba(255 255 255 / 0.15);
+      background: rgba(255, 255, 255, 0.15);
+      transition: background 0.3s;
     }
 
-    nav .nav-links a:hover {
+    .nav-links a:hover {
       background: white;
-      color: #165998;
+      color: var(--primary-blue);
     }
 
-    .container {
-      max-width: 800px;
-      margin: auto;
+    main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+    }
+
+    .card {
+      display: flex;
+      flex-direction: row;
+      gap: 2rem;
+      max-width: 1000px;
+      width: 100%;
       background: white;
-      border-radius: 10px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+      padding: 24px;
+      flex-wrap: wrap;
     }
 
-    .container img {
-      max-width: 100%;
-      height: 300px;
+    .card img {
+      flex: 1 1 350px;
+      height: 100%;
+      max-height: 420px;
       object-fit: cover;
-      border-radius: 8px;
-      margin-bottom: 15px;
+      border-radius: 12px;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .info {
+      flex: 1 1 300px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
 
     .info h2 {
-      margin-bottom: 10px;
-      font-size: 1.8rem;
+      font-size: 2rem;
       color: #111827;
+      margin-bottom: 12px;
     }
 
     .info p {
-      margin: 6px 0;
       font-size: 1rem;
       color: #333;
+      margin: 6px 0;
     }
 
     .info a {
-      display: inline-block;
-      margin-top: 8px;
+      margin-top: 12px;
       font-weight: bold;
-      text-decoration: none;
       color: #2563eb;
+      text-decoration: none;
     }
 
     .info a:hover {
@@ -85,14 +126,16 @@
     }
 
     #wishlistBtn {
-      margin-top: 15px;
+      margin-top: 20px;
       padding: 10px 20px;
       border: none;
       border-radius: 8px;
-      background-color: #ef4444;
+      background-color: var(--accent-red);
       color: white;
       font-weight: bold;
       cursor: pointer;
+      transition: background-color 0.3s;
+      font-size: 1rem;
     }
 
     #wishlistBtn i {
@@ -100,7 +143,53 @@
     }
 
     #wishlistBtn:hover {
-      background-color: #dc2626;
+      background-color: #b91c1c;
+    }
+
+    footer {
+      background-color: var(--primary-blue);
+      color: white;
+      text-align: center;
+      padding: 1rem 0;
+      font-size: 0.9rem;
+      margin-top: auto;
+    }
+
+    footer a {
+      color: white;
+      text-decoration: underline;
+    }
+
+    footer .social-icons {
+      margin-top: 8px;
+    }
+
+    footer .social-icons i {
+      margin: 0 6px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: transform 0.3s, color 0.3s;
+    }
+
+    footer .social-icons i:hover {
+      transform: scale(1.2);
+      color: var(--accent-red);
+    }
+
+    @media (max-width: 768px) {
+      .card {
+        flex-direction: column;
+        padding: 16px;
+      }
+
+      .card img {
+        width: 100%;
+        max-height: 280px;
+      }
+
+      .info h2 {
+        font-size: 1.5rem;
+      }
     }
   </style>
 </head>
@@ -116,9 +205,22 @@
     </div>
   </nav>
 
-  <div class="container" id="item-details">
-    <p>Loading item...</p>
-  </div>
+  <main>
+    <div class="card" id="item-details">
+      <p>Loading item...</p>
+    </div>
+  </main>
+
+  <footer>
+    © 2025 CampusKart | Built by Students for Students |
+    <a href="#">Contact Us</a>
+    <div class="social-icons">
+      <i class="fab fa-facebook-f"></i>
+      <i class="fab fa-instagram"></i>
+      <i class="fab fa-twitter"></i>
+      <i class="fab fa-linkedin-in"></i>
+    </div>
+  </footer>
 
   <script>
     const detailsContainer = document.getElementById("item-details");
@@ -126,7 +228,6 @@
     const itemId = params.get("id");
     let currentUserId = null;
 
-    // Load item if ID is present
     if (!itemId) {
       detailsContainer.innerHTML = "<p>❌ Item ID missing from URL.</p>";
     } else {
@@ -138,7 +239,7 @@
         .then(item => {
           const imgSrc = item.image
             ? `http://localhost:5000${item.image}`
-            : "https://via.placeholder.com/600x300?text=No+Image";
+            : "https://via.placeholder.com/600x400?text=No+Image";
 
           const seller = item.createdBy || {};
           const username = seller.username || "Unknown";
@@ -152,24 +253,24 @@
           const html = `
             <img src="${imgSrc}" alt="${item.title}" />
             <div class="info">
-              <h2>${item.title}</h2>
-              <p><strong>Price:</strong> ₹${Number(item.price).toFixed(2)}</p>
-              <p><strong>Category:</strong> ${item.category || "N/A"}</p>
-              <p><strong>Description:</strong> ${item.description || "No description provided."}</p>
-              <p><strong>Seller Name:</strong> ${username}</p>
-              <p><strong>Email:</strong> ${email}</p>
-              <p><strong>Mobile:</strong> ${phone}</p>
-              ${sellerProfileLink}
-              <br />
+              <div>
+                <h2>${item.title}</h2>
+                <p><strong>Price:</strong> ₹${Number(item.price).toFixed(2)}</p>
+                <p><strong>Category:</strong> ${item.category || "N/A"}</p>
+                <p><strong>Description:</strong> ${item.description || "No description provided."}</p>
+                <p><strong>Seller:</strong> ${username}</p>
+               
+                ${sellerProfileLink}
+              </div>
               <button id="wishlistBtn" style="display:none;"><i class="fas fa-heart"></i> Add to Wishlist</button>
             </div>
           `;
           detailsContainer.innerHTML = html;
 
           const wishlistBtn = document.getElementById("wishlistBtn");
-          if (currentUserId) wishlistBtn.style.display = "inline-block";
+          if (currentUserId && wishlistBtn) wishlistBtn.style.display = "inline-block";
 
-          wishlistBtn.addEventListener("click", async () => {
+          wishlistBtn?.addEventListener("click", async () => {
             try {
               const res = await fetch("http://localhost:5000/api/wishlist", {
                 method: "POST",
@@ -197,7 +298,6 @@
         });
     }
 
-    // Auth check
     fetch("http://localhost:5000/api/auth/verify", {
       credentials: "include"
     })
@@ -207,10 +307,11 @@
         currentUserId = user._id;
         document.getElementById("loginBtn").style.display = "none";
         document.getElementById("logoutBtn").style.display = "inline-block";
+        const wishlistBtn = document.getElementById("wishlistBtn");
+        if (wishlistBtn) wishlistBtn.style.display = "inline-block";
       }
     });
 
-    // Logout
     document.getElementById("logoutBtn").addEventListener("click", async (e) => {
       e.preventDefault();
       await fetch("http://localhost:5000/api/auth/logout", {

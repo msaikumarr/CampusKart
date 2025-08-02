@@ -166,10 +166,10 @@
     .btn {
       text-decoration: none;
       font-weight: 600;
-      margin: 4px;
       padding: 6px 12px;
       border-radius: 6px;
       cursor: pointer;
+      font-size: 0.9rem;
     }
 
     .view-btn {
@@ -203,6 +203,14 @@
     .delete-btn:hover {
       background-color: #dc2626;
       color: white;
+    }
+
+    .btn-row {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 10px;
     }
 
     footer {
@@ -242,9 +250,7 @@
       <img src="./images/logo.jpg" alt="CampusKart Logo" />
       <span>CampusKart</span>
     </a>
-    <div class="nav-links" id="navLinks">
-      <!-- Filled dynamically -->
-    </div>
+    <div class="nav-links" id="navLinks"></div>
   </nav>
 
   <div class="toggle-links" id="toggleLinks">
@@ -301,17 +307,16 @@
         return false;
       }
     }
-// <a href="product.html" class="active">Products</a>
+
     function renderNavLinks(isLoggedIn) {
       navLinks.innerHTML = isLoggedIn ? `
         <a href="Home.html">Home</a>
-       
         <a href="sell.html">Sell</a>
         <a href="wishlist.html">Wishlist</a>
         <a href="#" id="logoutBtn">Logout</a>
       ` : `
         <a href="Home.html">Home</a>
-        <a href="sell.html" class="active">sell</a>
+                <a href="sell.html" class="active">Sell</a>
         <a href="login.html">Login</a>
         <a href="signup.html">Signup</a>
       `;
@@ -370,14 +375,26 @@
 
           const canDelete = (currentUserId && createdById === currentUserId) || isAdmin;
 
-          card.innerHTML = `
-            <img src="${imgSrc}" alt="${item.title}" />
-            <h3>${item.title}</h3>
-            <p>₹${Number(item.price).toFixed(2)}</p>
-            <a href="item?id=${item._id}" class="btn view-btn"><i class="fas fa-eye"></i> View</a>
-            ${createdById === currentUserId ? `<a href="edit.html?id=${item._id}" class="btn edit-btn"><i class="fas fa-edit"></i> Edit</a>` : ""}
-            ${canDelete ? `<button class="btn delete-btn" data-id="${item._id}"><i class="fas fa-trash"></i> Delete</button>` : ""}
-          `;
+         let buttonsHTML = `
+  <a href="item?id=${item._id}" class="btn view-btn"><i class="fas fa-eye"></i> View</a>
+`;
+
+if (isMyItems && createdById === currentUserId) {
+  buttonsHTML += `
+    <a href="edit?id=${item._id}" class="btn edit-btn"><i class="fas fa-edit"></i> Edit</a>
+    <button class="btn delete-btn" data-id="${item._id}"><i class="fas fa-trash"></i> Delete</button>
+  `;
+}
+
+card.innerHTML = `
+  <img src="${imgSrc}" alt="${item.title}" />
+  <h3>${item.title}</h3>
+  <p>₹${Number(item.price).toFixed(2)}</p>
+  <div class="btn-row">
+    ${buttonsHTML}
+  </div>
+`;
+
 
           productContainer.appendChild(card);
         });
@@ -412,3 +429,5 @@
   </script>
 </body>
 </html>
+
+     

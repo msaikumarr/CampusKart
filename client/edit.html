@@ -185,29 +185,42 @@
   <footer>
     &copy; 2025 CampusKart. All rights reserved.
   </footer>
-
   <script>
-    const id = new URLSearchParams(window.location.search).get("id");
-    const form = document.getElementById("editForm");
+  const id = new URLSearchParams(window.location.search).get("id");
 
-    async function protectRoute() {
-      const res = await fetch("http://localhost:5000/api/auth/verify", { credentials: "include" });
-      if (!res.ok) window.location.href = "login.html";
-    }
+  if (!id || id === "null" || id === "undefined") {
+    alert("Invalid item ID. Redirecting to homepage.");
+    window.location.href = "Home.html";
+  }
 
-    async function loadItem() {
+  const form = document.getElementById("editForm");
+
+  async function protectRoute() {
+    const res = await fetch("http://localhost:5000/api/auth/verify", { credentials: "include" });
+    if (!res.ok) window.location.href = "login.html";
+  }
+
+  async function loadItem() {
+    try {
       const res = await fetch(`http://localhost:5000/api/items/${id}`);
       const item = await res.json();
-      if (res.ok) {
-        form.title.value = item.title;
-        form.price.value = item.price;
-        form.description.value = item.description;
-      }
-    }
 
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const formData = new FormData(form);
+      if (!res.ok) throw new Error(item.message || "Item not found");
+
+      form.title.value = item.title;
+      form.price.value = item.price;
+      form.description.value = item.description;
+    } catch (err) {
+      alert("⚠️ Failed to load item: " + err.message);
+      window.location.href = "Home.html";
+    }
+  }
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const formData = new FormData(form);
+
+    try {
       const res = await fetch(`http://localhost:5000/api/items/${id}`, {
         method: "PUT",
         body: formData,
@@ -215,16 +228,19 @@
       });
 
       const data = await res.json();
-      if (res.ok) {
-        alert("Item updated!");
-        window.location.href = `item.html?id=${id}`;
-      } else {
-        alert("❌ " + (data.message || "Update failed"));
-      }
-    });
+      if (!res.ok) throw new Error(data.message || "Update failed");
 
-    protectRoute();
-    loadItem();
-  </script>
+      alert("✅ Item updated!");
+      window.location.href = `item?id=${id}`;
+    } catch (err) {
+      alert("❌ " + err.message);
+    }
+  });
+
+  protectRoute();
+  loadItem();
+</script>
+
+  
 </body>
 </html>

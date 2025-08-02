@@ -27,7 +27,7 @@ catch(error){
 
 //To get all items
 
-// controllers/ItemController.js
+
 
 const getItems = async (req, res) => {
   try {
@@ -66,30 +66,47 @@ const getItemById = async (req, res) => {
 
 
 //update a item
-const updateItem=async (req,res)=>{
-    try{
-        const item=await Item.findByIdAndUpdate(req.params.id,req.body,{new:true});
-        if(!item){
-            return res.status(404).json({message:"Item not found"});
-        }
-        res.json(item)
-    }catch(error){
-        res.status(500).json({message:"Server error"})
+const updateItem = async (req, res) => {
+  try {
+    const item = await Item.findById(req.params.id);
+    if (!item) return res.status(404).json({ message: "Item not found" });
+
+    if (item.createdBy.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ message: "Unauthorized" });
     }
+
+    item.title = req.body.title || item.title;
+    item.category = req.body.category || item.category;
+    item.price = req.body.price || item.price;
+    item.description = req.body.description || item.description;
+    if (req.file) item.image = `/uploads/${req.file.filename}`;
+
+    const updatedItem = await item.save();
+    res.json(updatedItem);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
 };
 
 // Delete a item
-const deleteItem=async(req,res)=>{
-    try{
-        const item=await Item.findByIdAndDelete(req.params.id)
-        if(!item){
-            return res.status(404).json({message:"Item not found"});
-        }
-        res.json({message:"Item deleted successfully"})
-    }catch(error){
-        res.status(500).json({message:"Server error"});
+const deleteItem = async (req, res) => {
+  try {
+    const item = await Item.findById(req.params.id);
+    if (!item) return res.status(404).json({ message: "Item not found" });
+
+    if (item.createdBy.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ message: "Unauthorized" });
     }
+
+    await item.remove();
+    res.json({ message: "Item deleted successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
 };
+
 // Search items by title or category case-insensitive
 const searchItems = async (req, res) => {
   try {

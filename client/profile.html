@@ -9,6 +9,11 @@
     :root {
       --primary-blue: #165998;
       --white: #ffffff;
+      --gray-light: #f3f4f6;
+      --gray-medium: #6b7280;
+      --gray-dark: #374151;
+      --rating-gold: #fbbf24;
+      --btn-hover-bg: #2563eb;
     }
 
     * {
@@ -19,10 +24,11 @@
 
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f9fafb;
+      background-color: var(--gray-light);
       display: flex;
       flex-direction: column;
       min-height: 100vh;
+      color: var(--gray-dark);
     }
 
     nav {
@@ -33,6 +39,7 @@
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
     }
 
     .logo-brand {
@@ -40,23 +47,25 @@
       align-items: center;
       gap: 10px;
       text-decoration: none;
+      font-weight: bold;
     }
 
     .logo-brand img {
       height: 36px;
       width: 36px;
       border-radius: 6px;
+      object-fit: cover;
     }
 
     .logo-brand span {
       font-size: 1.5rem;
-      font-weight: bold;
       color: white;
+      user-select: none;
     }
 
     .nav-links {
       display: flex;
-      gap: 14px;
+      gap: 18px;
       flex-wrap: wrap;
       justify-content: center;
     }
@@ -66,92 +75,211 @@
       text-decoration: none;
       font-weight: 600;
       border-radius: 20px;
-      padding: 6px 12px;
+      padding: 8px 16px;
       background: rgba(255, 255, 255, 0.15);
-      transition: background-color 0.3s;
-      font-size: 0.95rem;
+      transition: background-color 0.3s, color 0.3s;
+      font-size: 1rem;
+      user-select: none;
     }
 
     .nav-links a:hover {
       background: white;
       color: var(--primary-blue);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
 
     h2 {
       text-align: center;
-      margin-top: 20px;
-      font-size: 1.6rem;
-      color: #111827;
+      margin-top: 24px;
+      font-size: 2rem;
+      color: var(--primary-blue);
+      letter-spacing: 0.05em;
+      font-weight: 700;
     }
 
     #profileInfo {
-      max-width: 600px;
-      margin: 20px auto;
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      max-width: 700px;
+      margin: 25px auto 40px;
+      background: var(--white);
+      padding: 30px;
+      border-radius: 14px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
     }
 
-    #profileInfo p {
+    .profile-header {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      width: 100%;
+      flex-wrap: wrap;
+    }
+
+    .profile-pic {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background-color: var(--gray-light);
+      background-position: center;
+      background-size: cover;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+      flex-shrink: 0;
+      border: 3px solid var(--primary-blue);
+    }
+
+    .profile-details {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .profile-details h3 {
+      font-size: 1.8rem;
+      color: var(--primary-blue);
+      margin-bottom: 6px;
+      font-weight: 700;
+    }
+
+    .profile-details .rating {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 12px;
+      user-select: none;
+    }
+
+    .rating i {
+      color: var(--rating-gold);
+      font-size: 1.25rem;
+    }
+
+    .rating span {
       font-size: 1rem;
-      margin: 10px 0;
+      color: var(--gray-medium);
+    }
+
+    .bio {
+      font-size: 1rem;
+      line-height: 1.5;
+      color: var(--gray-dark);
+      margin-bottom: 16px;
+      min-height: 60px;
+    }
+
+    .contact-info {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      font-size: 1rem;
+      color: var(--gray-dark);
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--primary-blue);
+      cursor: pointer;
+      transition: color 0.3s;
+      user-select: none;
+    }
+
+    .contact-item:hover {
+      color: var(--btn-hover-bg);
+    }
+
+    .contact-item i {
+      font-size: 1.3rem;
+    }
+
+    .social-links {
+      margin-top: 10px;
+      display: flex;
+      gap: 18px;
+    }
+
+    .social-links a {
+      color: var(--primary-blue);
+      font-size: 1.4rem;
+      transition: color 0.3s;
+    }
+
+    .social-links a:hover {
+      color: white;
+      
     }
 
     .view-items-btn {
-      display: inline-block;
-      margin-top: 15px;
-      padding: 8px 16px;
-      font-size: 0.95rem;
-      border-radius: 6px;
-      border: 1px solid #2563eb;
-      background-color: white;
-      color: #2563eb;
+      margin-top: 20px;
+      padding: 12px 24px;
+      font-size: 1.05rem;
+      border-radius: 8px;
+      border: 2px solid var(--primary-blue);
+      background-color: var(--white);
+      color: var(--primary-blue);
       text-decoration: none;
-      transition: all 0.3s;
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      user-select: none;
     }
 
     .view-items-btn:hover {
-      background-color: #2563eb;
+      background-color: var(--btn-hover-bg);
       color: white;
+      box-shadow: 0 6px 20px rgba(37, 99, 235, 0.6);
+      transform: translateY(-3px);
+    }
+
+    .view-items-btn i {
+      font-size: 1.3rem;
+    }
+
+    .loading-spinner {
+      border: 5px solid var(--gray-light);
+      border-top: 5px solid var(--primary-blue);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 30px auto;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
     }
 
     footer {
       background-color: var(--primary-blue);
       color: white;
       text-align: center;
-      padding: 12px;
-      font-size: 0.9rem;
+      padding: 14px 10px;
+      font-size: 0.95rem;
       margin-top: auto;
+      user-select: none;
     }
 
-    @media (max-width: 600px) {
-      nav {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .nav-links {
-        justify-content: center;
-        margin-top: 8px;
-      }
-
-      .nav-links a {
-        padding: 5px 10px;
-        font-size: 0.85rem;
-      }
-
-      .logo-brand span {
-        font-size: 1.3rem;
-      }
-
-      h2 {
-        font-size: 1.3rem;
-      }
-
+    @media (max-width: 700px) {
       #profileInfo {
-        margin: 15px 10px;
-        padding: 15px;
+        padding: 20px;
+      }
+
+      .profile-header {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .profile-details {
+        text-align: center;
+      }
+
+      .contact-info {
+        justify-content: center;
       }
     }
   </style>
@@ -166,12 +294,14 @@
       <a href="Home.html">Home</a>
       <a href="product.html">Products</a>
       <a href="wishlist.html">Wishlist</a>
-      <a href="profile.html">Profile</a>
+     
     </div>
   </nav>
 
   <h2>Seller Profile</h2>
-  <div id="profileInfo">Loading...</div>
+  <div id="profileInfo">
+    <div class="loading-spinner" aria-label="Loading"></div>
+  </div>
 
   <footer>
     &copy; 2025 CampusKart. Built by Students for Students.
@@ -181,7 +311,7 @@
     const userId = new URLSearchParams(window.location.search).get("user");
 
     if (!userId) {
-      document.getElementById("profileInfo").innerHTML = "<p>No user ID provided in URL.</p>";
+      document.getElementById("profileInfo").innerHTML = "<p style='text-align:center; color:#ef4444; font-weight:600;'>No user ID provided in URL.</p>";
     } else {
       verifyUser();
       loadProfile();
@@ -198,28 +328,72 @@
       }
     }
 
-    async function loadProfile() {
-      try {
-        const res = await fetch(`http://localhost:5000/api/users/${userId}`);
-        const user = await res.json();
-
-        if (res.ok) {
-          document.getElementById("profileInfo").innerHTML = `
-            <p><i class="fas fa-user"></i> <strong>Username:</strong> ${user.username}</p>
-            <p><i class="fas fa-envelope"></i> <strong>Email:</strong> ${user.email || 'Not Provided'}</p>
-            <p><i class="fas fa-phone"></i> <strong>Phone:</strong> ${user.phone || 'Not Provided'}</p>
-            <a href="product.html?seller=${user._id}" class="view-items-btn">
-              <i class="fas fa-box"></i> View Seller's Items
-            </a>
-          `;
-        } else {
-          document.getElementById("profileInfo").textContent = "Error loading profile";
-        }
-      } catch (err) {
-        console.error("Error fetching profile:", err);
-        document.getElementById("profileInfo").textContent = "Server error";
+    function createStars(rating) {
+      const roundedRating = Math.round(rating * 2) / 2; // round to nearest 0.5
+      let starsHTML = "";
+      for (let i = 1; i <= 5; i++) {
+        if (i <= roundedRating) starsHTML += '<i class="fas fa-star"></i>';
+        else if (i - 0.5 === roundedRating) starsHTML += '<i class="fas fa-star-half-alt"></i>';
+        else starsHTML += '<i class="far fa-star"></i>';
       }
+      return starsHTML;
     }
+async function loadProfile() {
+  const profileDiv = document.getElementById("profileInfo");
+  try {
+    const res = await fetch(`http://localhost:5000/api/users/${userId}`);
+    if (!res.ok) {
+      profileDiv.innerHTML = "<p style='text-align:center; color:#ef4444; font-weight:600;'>Failed to load profile. User may not exist.</p>";
+      return;
+    }
+    const user = await res.json();
+
+    // Dummy fallback profile picture
+    const profilePicUrl = user.profilePicture || "https://ui-avatars.com/api/?name=" + encodeURIComponent(user.username) + "&background=165998&color=fff&size=120";
+
+    // Generate random rating between 0 and 5 (one decimal place)
+    const rating = parseFloat((Math.random() * 5).toFixed(1));
+
+    const bio = user.bio || "This seller hasn't added a bio yet.";
+    const social = user.social || {}; // Example: { twitter: "...", facebook: "...", instagram: "..." }
+
+    profileDiv.innerHTML = `
+      <div class="profile-header">
+        <div class="profile-pic" style="background-image: url('${profilePicUrl}');" alt="Seller Profile Picture"></div>
+        <div class="profile-details">
+          <h3>${user.username}</h3>
+          <div class="rating" aria-label="Seller rating: ${rating} out of 5 stars">
+            ${createStars(rating)}
+            <span>(${rating.toFixed(1)})</span>
+          </div>
+          <div class="contact-info">
+            <a href="mailto:${user.email}" class="contact-item" title="Email Seller">
+              <i class="fas fa-envelope"></i> ${user.email || "Email not provided"}
+            </a>
+            <a href="tel:${user.phone}" class="contact-item" title="Call Seller">
+              <i class="fas fa-phone"></i> ${user.phone || "Phone not provided"}
+            </a>
+          </div>
+          <div class="social-links">
+            ${social.twitter ? `<a href="${social.twitter}" target="_blank" aria-label="Twitter" rel="noopener noreferrer"><i class="fab fa-twitter"></i></a>` : ""}
+            ${social.facebook ? `<a href="${social.facebook}" target="_blank" aria-label="Facebook" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>` : ""}
+            ${social.instagram ? `<a href="${social.instagram}" target="_blank" aria-label="Instagram" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>` : ""}
+        <a href="product?seller=${user.id || user._id}" class="view-items-btn" aria-label="View Seller's Items">
+  <i class="fas fa-box"></i> View Items
+</a>
+
+        </div>
+      </div>
+    `;
+  } catch (err) {
+    console.error("Error fetching profile:", err);
+    profileDiv.innerHTML = "<p style='text-align:center; color:#ef4444; font-weight:600;'>Server error. Please try again later.</p>";
+  }
+}
+
+   
+
+   
   </script>
 </body>
 </html>
