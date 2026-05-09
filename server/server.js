@@ -10,6 +10,7 @@ dotenv.config({ path: path.join(__dirname, '.env') });
 const { JWT_SECRET, MONGODB_URI, CLIENT_ORIGINS, isProduction } = require('./config/env');
 const passport = require('./config/passport');
 const session = require('express-session');
+const MongoStore = require('connect-mongo');
 
 const app = express();
 const server = http.createServer(app);
@@ -26,6 +27,11 @@ const onlineUserSocketCounts = new Map();
 const lastSeenMap = new Map();
 
 // Middleware
+if (isProduction) {
+  // Required so secure cookies work correctly behind Render's proxy.
+  app.set('trust proxy', 1);
+}
+
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
@@ -38,6 +44,11 @@ app.use(session({
   secret: JWT_SECRET,
   resave: false,
   saveUninitialized: false,
+  store: MongoStore.create({
+    mongoUrl: MONGODB_URI,
+    ttl: 24 * 60 * 60,
+    autoRemove: 'native'
+  }),
   cookie: {
     secure: isProduction,
     sameSite: isProduction ? 'none' : 'lax',

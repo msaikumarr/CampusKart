@@ -1,0 +1,27 @@
+name: Trigger Render deploy for Server
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  trigger-render-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Render Deploy via API
+        env:
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+          RENDER_SERVICE_ID: ${{ secrets.RENDER_SERVICE_ID }}
+        run: |
+          if [ -z "$RENDER_API_KEY" ] || [ -z "$RENDER_SERVICE_ID" ]; then
+            echo "Missing Render secrets. Aborting."
+            exit 1
+          fi
+          echo "Triggering deploy for Render service: $RENDER_SERVICE_ID"
+          curl -X POST "https://api.render.com/v1/services/${RENDER_SERVICE_ID}/deploys" \
+            -H "Authorization: Bearer ${RENDER_API_KEY}" \
+            -H "Content-Type: application/json" \
+            -d '{"clearCache":false}' \
+            -o /tmp/render_response.json --silent --show-error
+          echo "Render response:"
+          cat /tmp/render_response.json
