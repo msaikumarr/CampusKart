@@ -10,7 +10,8 @@ dotenv.config({ path: path.join(__dirname, '.env') });
 const { JWT_SECRET, MONGODB_URI, CLIENT_ORIGINS, isProduction } = require('./config/env');
 const passport = require('./config/passport');
 const session = require('express-session');
-const MongoStore = require('connect-mongo');
+const connectMongo = require('connect-mongo');
+const MongoStore = connectMongo.default || connectMongo;
 
 const app = express();
 const server = http.createServer(app);
